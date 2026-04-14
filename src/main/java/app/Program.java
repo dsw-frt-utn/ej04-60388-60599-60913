@@ -7,7 +7,7 @@ import views.*;
 public class Program {
     public static void main(String[] args) throws IllegalArgumentException, InvalidPropertiesFormatException {
         Persistencia.inicializar();
-        ListarVehiculosView view = new ListarVehiculosView();
+        MenuPrincipalView view = new MenuPrincipalView();
         view.setVisible(true);
     }
 }
