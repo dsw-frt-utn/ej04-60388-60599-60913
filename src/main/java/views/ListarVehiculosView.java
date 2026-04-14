@@ -1,6 +1,8 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,16 +10,22 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 public class ListarVehiculosView extends javax.swing.JFrame {
-
-    /**
-     * Creates new form ListarAnimalesView
-     */
+    
     public ListarVehiculosView() {
         initComponents();
         listarVehiculos();
+        refrescarTabla();
+        getContentPane().setBackground(new Color(245, 247, 250));
+        vehiculosGrid.getTableHeader().setBackground(new Color(255, 255, 153)); 
+        vehiculosGrid.getTableHeader().setForeground(Color.BLACK);
+        vehiculosGrid.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+        vehiculosGrid.setSelectionBackground(new Color(245, 247, 250)); // naranja más claro
+        vehiculosGrid.setSelectionForeground(Color.BLACK);
+        vehiculosGrid.setGridColor(new Color(0,0,0));
     }
     private void listarVehiculos(){
         ArrayList<VehiculoViewModel> vehiculos = Controlador.getVehiculos();
+       
         vehiculosGrid.setModel(new DefaultTableModel(new Object[][] {}, 
             new String[] { "Patente","Vehículo", "Tipo", "Sucursal", "Cap.Carga", "Km/litro", "Año", "Litros extra", "Km a recorrer" }));
         
@@ -34,6 +42,10 @@ public class ListarVehiculosView extends javax.swing.JFrame {
                 vehiculo.getKmARecorrer()
             });
         }
+    }
+    
+    public void refrescarTabla(){
+        listarVehiculos();
     }
 
     /**
@@ -54,11 +66,12 @@ public class ListarVehiculosView extends javax.swing.JFrame {
         totalConsumoElectricosLabel = new javax.swing.JLabel();
         totalConsumoCombustibleValue = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Logística - Listar Vehículos");
-        setPreferredSize(new java.awt.Dimension(640, 480));
+        setBackground(new java.awt.Color(255, 255, 255));
         setSize(new java.awt.Dimension(640, 480));
 
+        vehiculosGrid.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         vehiculosGrid.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -70,30 +83,35 @@ public class ListarVehiculosView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        vehiculosGrid.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(vehiculosGrid);
 
+        calcularConsumos.setBackground(new java.awt.Color(255, 255, 153));
+        calcularConsumos.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
+        calcularConsumos.setForeground(new java.awt.Color(255, 102, 0));
         calcularConsumos.setText("Calcular Consumos");
+        calcularConsumos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 153, 51), 2, true));
         calcularConsumos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calcularConsumosActionPerformed(evt);
             }
         });
 
-        panel.setBackground(new java.awt.Color(0, 204, 204));
+        panel.setBackground(new java.awt.Color(255, 255, 153));
 
         totalConsumoElectricosValue.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         totalConsumoElectricosValue.setForeground(new java.awt.Color(255, 102, 51));
         totalConsumoElectricosValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalConsumoElectricosValue.setText("0");
 
-        totalConsumoCombustibleLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        totalConsumoCombustibleLabel.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         totalConsumoCombustibleLabel.setText("Consumo Vehículos Combustible");
 
-        totalConsumoElectricosLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        totalConsumoElectricosLabel.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         totalConsumoElectricosLabel.setText("Consumo Vehículos Eléctricos");
 
         totalConsumoCombustibleValue.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        totalConsumoCombustibleValue.setForeground(new java.awt.Color(0, 0, 153));
+        totalConsumoCombustibleValue.setForeground(new java.awt.Color(204, 51, 0));
         totalConsumoCombustibleValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalConsumoCombustibleValue.setText("0");
 
@@ -135,20 +153,23 @@ public class ListarVehiculosView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(calcularConsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(calcularConsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(calcularConsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))))
         );
 
         pack();
@@ -190,6 +211,8 @@ public class ListarVehiculosView extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ListarVehiculosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
