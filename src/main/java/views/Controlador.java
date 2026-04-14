@@ -1,7 +1,7 @@
 package views;
 
 import data.Persistencia;
-import domain.Vehiculo;
+import domain.*;
 import domain.VehiculoTipo;
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,6 +16,10 @@ public class Controlador {
         }
         return vehiculos;
     }
+   
+    public static ArrayList<Sucursal> getSucursales() {
+    return Persistencia.getSucursales();
+}
     
     public static double[] calcularConsumos(Map<String, Double> vehiculos){
         double consumoElectricos = 0;
@@ -30,5 +34,13 @@ public class Controlador {
            }
         }
         return new double[] {consumoElectricos, consumoCombustible};
+    }
+    
+    public static void agregarVehiculo(Vehiculo vehiculo) {
+        Persistencia.agregarVehiculo(vehiculo);
+    }
+
+    public static boolean existeVehiculo(String patente) {
+        return Persistencia.getVehiculo(patente).isPresent();
     }
 }
