@@ -16,7 +16,7 @@ public class VehiculoViewModel {
     public VehiculoViewModel(Vehiculo vehiculo){
         if(vehiculo == null)return;
         patente = vehiculo.getPatente();
-        this.vehiculo = vehiculo.toString();
+        this.vehiculo = vehiculo.getMarca().getNombre() + "-" + vehiculo.getModelo();
         tipo = vehiculo.getTipo().name();
         sucursal = vehiculo.getCodigoSucursal();
         capacidadCarga = vehiculo.getCapacidadCarga();
